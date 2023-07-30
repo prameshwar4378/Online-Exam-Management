@@ -1,0 +1,169 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Exam Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Exam Dashboard</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row mt-4">
+                    <div class="col-sm-11">
+                        <a href="{% url 'export_exam_data_to_pdf' exam_id %}" class="btn btn-primary mt-2">PDF</a>
+                        <a href=" " class="btn btn-primary mt-2">CSV</a> 
+                        <a href="" class="btn btn-danger mt-2" data-toggle="modal"
+                            data-target="#delete_exam_model">Delete</a>
+                    </div> 
+                </div>
+                
+<!-- Modal -->
+<div class="modal fade" id="delete_exam_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-danger">
+          <h4 class="modal-title text-white" id="exampleModalLongTitle">Delete Exam</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-left">
+          <!-- ======= Note :- This space is for only note....   ======= --> <br>
+          <h5>Are you sure to Delete <b>"{{exam}}"</b></h5>
+        </div>
+        <div class="modal-footer">
+          <a href="{% url 'delete_exam' exam.id %}" class="btn btn-danger px-3 ">Yes</a> &nbsp;
+          <button  type="button" class="btn btn-secondary bgcolor px-3" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+                <hr>
+
+                <div class="container mb-3 " style="width:95%;">
+                    <div class="row ">
+                        <div class="col-sm-3 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                            <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                                <div class="card-header text-dark" style="background:#A0D2FF;">
+                                    <b> Total Student </b>
+                                </div>
+                                <div class="card-header py-2">
+                                    <h3 class="card-title" style="font-size:30px;"><b>{{total_students}}</b></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                            <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                                <div class="card-header text-dark" style="background:#A0D2FF;">
+                                    <b> Attempted Students </b>
+                                </div>
+                                <div class="card-header py-2">
+                                    <h3 class="card-title" style="font-size:30px;"><b>{{attended_students}}</b></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                            <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                                <div class="card-header text-dark" style="background:#A0D2FF;">
+                                    <b>Not Attempted Students</b>
+                                </div>
+                                <div class="card-header py-2">
+                                    <h3 class="card-title" style="font-size:30px;"><b>{{not_attended_students}}</b></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3 mt-2" data-aos="zoom-in" data-aos-duration="1000">
+                            <div class="card text-center" style="box-shadow:5px 5px 8px -2px; border:2px solid white;">
+                                <div class="card-header text-dark" style="background:#A0D2FF;">
+                                    <b> Average </b>
+                                </div>
+                                <div class="card-header py-2">
+                                    <h3 class="card-title" style="font-size:30px;"><b>{{average_percentage|floatformat:2}}%</b></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+ 
+
+                <div class="container" style="width:95%;">
+                    <div class="mt-4"
+                        style=" height:700px;  overflow:scroll;  box-shadow:0px 0px 10px -3px; border-radius:10px; user-select: none; ">
+                         
+                        <table class="table table-hover px-4 py-4" style="min-width: max-content; background:white;">
+                            {% if students %}
+                            <thead>
+                                <tr style="background:#02B4C3;">
+                                    <th scope="col" class="text-center text-white">Sr.No</th>
+                                    <th scope="col" class="text-center text-white">Student Name</th>
+                                    <th scope="col" class="text-center text-white">Division</th>
+                                    <th scope="col" class="text-center text-white">Percentage</th>
+                                    <th scope="col" class="text-center text-white">Status</th>
+                                    <th scope="col" class="text-center text-white">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in students %}
+                                <tr class="text-center">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td style="text-align:left;">{{ student.name }}</td>
+                                    <td>{{ student.division }}</td>
+                                    <td>
+                                        {% if student.percentage %}{{ student.percentage|floatformat:2 }}% {% else %}---{% endif %}</td>
+                                    <td>
+                                        {% if student.attended %}
+                                            <h6 class="btn btn-success">Attended</h6>
+                                        {% else %}
+                                            <h6>---</h6>
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        
+                                        {% if student.attended %}
+                                            <a href="{{student.id}}" class="btn btn-primary">View</a>
+                                        {% else %}
+                                        <button type="button" class="btn btn-secondary" disabled>View</button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <h3>No Students Found</h3>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </table>
+                        
+                    </div>
+
+                </div>
+
+                 
+            </div><!-- End Left side columns -->
+    </section>
+
+
+</main><!-- End #main -->
+ 
+
+
+{% endblock content %}

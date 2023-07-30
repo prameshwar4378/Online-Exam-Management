@@ -1,0 +1,360 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>{% block title %}{% endblock title %}</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+    <!-- Template Main CSS File -->
+
+
+    {% comment %} #link for animation {% endcomment %}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <!-- =======================================================
+  * Template Name: NiceAdmin - v2.5.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+  
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap 5 CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+
+<!-- Bootstrap 5 JS -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"></script> -->
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+
+</head>
+
+<style>
+  body{
+    background:#F6FBFE;
+  }
+  /* Info Cards */
+  .dashboard .info-card {
+    padding-bottom: 10px;
+    border-radius:7px;
+    box-shadow:0px 0px 7px -5px;
+  }
+  .dashboard .info-card:hover {
+      box-shadow:0px 0px 10px -5px;
+      transition:0.4s;
+      background:#D8F0F9;
+    }
+  
+  .dashboard .info-card h6 {
+    font-size: 28px;
+    color: #012970;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dashboard .card-icon {
+    font-size: 50px;
+    line-height: 0;
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+    flex-grow: 0;
+  }
+  
+  .dashboard .sales-card .card-icon {
+    color: #02B4C3;
+    background: #f6f6fe;
+  }
+  
+  .dashboard .sales-card a {
+      text-decoration:none;
+    }
+
+    
+    @media (max-width:500px){
+      .session_title{
+          display:none;
+      }
+  }
+  @media (max-width:400px){
+    .session_icon{
+        display:none;
+    }
+}
+</style>
+<body>
+
+  
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+  <div class="d-flex align-items-center justify-content-between">
+      <a href=" " class="logo d-flex align-items-center">
+          <center>
+            <img src="{% static 'img/logo.jpg' %}" alt="IMS - Logo">
+          </center>
+          <!-- <span class="d-none d-lg-block">IMS</span> -->
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div><!-- End Logo -->
+
+  <div class="px-4" >
+     {% comment %} <a href="" style="text-decoration:none;color:rgb(3, 119, 202);"  data-toggle="modal" data-target="#update_academic_session"> <span class="session_title"> session :</span> {{user.academic_session}} <span class="session_icon">  <i class="bi bi-caret-down-square" ></i></span></a> {% endcomment %}
+  </div><!-- End Search Bar -->
+
+
+
+
+
+
+
+  <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+          <li class="nav-item dropdown pe-3 text-center  ">
+
+              <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                <img src="{% static 'img/profile.png' %}" alt="Profile" class="rounded-circle" style="width:40px; height:40px;">
+                <span class="d-none d-md-block dropdown-toggle ps-2"> {{request.user.username}}</span>
+              </a><!-- End Profile Iamge Icon -->
+
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <li class="dropdown-header">
+                      <h6>{{request.user.name}}</h6>
+                      <span>Developer</span>
+                  </li>
+                  <li>
+                      <hr class="dropdown-divider">
+                  </li>
+
+                  <li>
+                      <a class="dropdown-item d-flex align-items-center" href="#"  data-toggle="modal" data-target="#logout_model">
+                          <i class="bi bi-box-arrow-right"></i>
+                          <span>Sign Out</span>
+                      </a>
+                  </li>
+
+              </ul><!-- End Profile Dropdown Items -->
+          </li><!-- End Profile Nav -->
+
+      </ul>
+  </nav><!-- End Icons Navigation -->
+
+</header><!-- End Header -->
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+  <ul class="sidebar-nav" id="sidebar-nav">
+
+    <li class="nav-item">
+          <a class="nav-link " href="{% url 'developer_dashboard' %}">
+              <i class="bi bi-grid"></i>
+              <span>DASHBOARD</span>
+          </a>
+    </li>
+
+      {% comment %} <li class="nav-item">
+        <a class="nav-link " href=" ">
+          <i class="bi bi-card-list"></i>
+            <span>Institute List</span>
+        </a>
+      </li> {% endcomment %}
+ 
+      
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'institute_registration' %}">
+          <i class="bi bi-card-list"></i>
+            <span>Add Institute</span>
+        </a>
+      </li> 
+ 
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'institute_list' %}">
+          <i class="bi bi-card-list"></i>
+            <span>Institute List</span>
+        </a>
+      </li> 
+ 
+  </ul>
+</aside><!--  End Sidebar-->
+
+  
+<!-- Modal -->
+<div class="modal fade" id="logout_model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <h4 class="modal-title text-white" id="exampleModalLongTitle">Logout</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-left">
+        <!-- ======= Note :- This space is for only note....   ======= --> <br>
+        <h5>Are you sure to Sign Out <b>"{{user.username}}"</b></h5>
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'logout' %}" class="btn btn-danger px-3 ">Yes</a> &nbsp;
+        <button  type="button" class="btn btn-secondary bgcolor px-3" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  {% block content %}
+
+  {% endblock content %}
+
+
+<!-- Modal -->
+<div class="modal fade" id="update_academic_session" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h4 class="modal-title text-white" id="exampleModalLongTitle">Update Academic Session</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-left">
+        <form action="" method="post">
+          {% csrf_token %}
+          <select name="cmb_update_academic_session" id="cmb_academic_session" class="form-control">
+            <option value="">-----</option>
+            <option value="2022-23">2022-23</option>
+            <option value="2023-24">2023-24</option>
+            <option value="2024-25">2024-25</option>
+            <option value="2025-26">2025-26</option>
+          </select>
+
+       
+      </div>
+      <div class="modal-footer">
+        <input type="submit" value="Update" class="btn btn-primary"> &nbsp;
+      </form>
+        <button  type="button" class="btn btn-secondary bgcolor px-3" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer text-center">
+      <div class="copyright">
+          &copy; Copyright <strong><span>SMIS</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+          Developed by <a href="https://prameshwar4378.github.io/My_Portfolio/" style="text-decoration:none;">Rameshwar Pawar</a>
+      </div>
+  </footer><!-- End Footer -->
+
+
+</body>
+<script>
+  !function(){"use strict";let e=(e,t=!1)=>(e=e.trim(),t)?[...document.querySelectorAll(e)]:document.querySelector(e),t=(t,s,l,r=!1)=>{r?e(s,r).forEach(e=>e.addEventListener(t,l)):e(s,r).addEventListener(t,l)},s=(e,t)=>{e.addEventListener("scroll",t)};e(".toggle-sidebar-btn")&&t("click",".toggle-sidebar-btn",function(t){e("body").classList.toggle("toggle-sidebar")}),e(".search-bar-toggle")&&t("click",".search-bar-toggle",function(t){e(".search-bar").classList.toggle("search-bar-show")});let l=e("#navbar .scrollto",!0),r=()=>{let t=window.scrollY+200;l.forEach(s=>{if(!s.hash)return;let l=e(s.hash);l&&(t>=l.offsetTop&&t<=l.offsetTop+l.offsetHeight?s.classList.add("active"):s.classList.remove("active"))})};window.addEventListener("load",r),s(document,r);let a=e("#header");if(a){let o=()=>{window.scrollY>100?a.classList.add("header-scrolled"):a.classList.remove("header-scrolled")};window.addEventListener("load",o),s(document,o)}}();
+</script>
+
+<script src="{% static 'js/base.js' %}"></script>
+
+
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+</script>
+
+<!-- Chart Js for display Charts-->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+<!-- Vendor JS Files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"> </script> 
+{% comment %} 
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+</script>  {% endcomment %}
+ <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+</script> 
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+</script> 
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    {% for msg in messages %}
+        {% if msg.tags == 'success' %}
+        swal({
+          title: "Good job!",
+          text: "{{msg}}",
+          icon: "success",
+          button: "OK",
+        });
+
+        {% elif msg.tags == 'error' %}
+        swal({
+          title: "Error",
+          text: "{{msg}}",
+          icon: "error",
+          button: "OK",
+        });
+         
+        {% elif msg.tags == 'warning' %}
+        swal({
+          title: "Warning",
+          text: "{{msg}}",
+          icon: "warning",
+          button: "OK",
+        });
+         
+        {% elif msg.tags == 'info' %}
+        swal({
+          title: "Oops",
+          text: "{{msg}}",
+          icon: "info",
+          button: "OK",
+        });
+         
+        {% endif %}
+    {% endfor %}
+</script>
+ 
+
+
+</html>

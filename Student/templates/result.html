@@ -1,0 +1,198 @@
+{% extends 'Student_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Result</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Result </a></li>
+            </ol>
+        </nav>
+
+    </div><!-- End Page Title -->
+
+
+
+
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+
+                <div class="row">
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card" style="overflow:hidden;">
+                            <div class="card-content" style="overflow:hidden;">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-pencil primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3><b>{{ total_questions }}</b></h3>
+                                            <span>Total Questions:</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="height:200px; width:400px; background-color:#35A2C5; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card" style="overflow:hidden;">
+                            <div class="card-content" style="overflow:hidden;">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-pencil primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3><b>{{ attempted_questions }}</b></h3>
+                                            <span>Attempted Questions: </span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="height:200px; width:400px; background-color:red; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card" style="overflow:hidden;">
+                            <div class="card-content" style="overflow:hidden;">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-pencil primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3><b>{{ correct_answers }}</b></h3>
+                                            <span>Correct Answers: </span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="height:200px; width:400px; background-color:#A935C5; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card" style="overflow:hidden;">
+                            <div class="card-content" style="overflow:hidden;">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-pencil primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3><b> {{ incorrect_answers }}</b></h3>
+                                            <span>Incorrect Answers:</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="height:200px; width:400px; background-color:#35C5BA; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card" style="overflow:hidden;">
+                            <div class="card-content" style="overflow:hidden;">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-pencil primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3><b>{{ score }} / {{ total_questions }}</b></h3>
+                                            <span>Your Score: </span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="height:200px; width:400px; background-color:#35C58C; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-6 col-12">
+                        <div class="card" style="overflow:hidden;">
+                            <div class="card-content" style="overflow:hidden;">
+                                <div class="card-body">
+                                    <div class="media d-flex">
+                                        <div class="align-self-center">
+                                            <i class="icon-pencil primary font-large-2 float-left"></i>
+                                        </div>
+                                        <div class="media-body text-right">
+                                            <h3><b> {{ percentage|floatformat:2 }}%</b></h3>
+                                            <span>Percentage:</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        style="height:200px; width:400px; background-color:#C5358C; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 col-sm-12 col-12">
+                            <a href="{% url 'exam_review' %}">
+                                <div class="card bg-success" style="overflow:hidden;">
+                                    <div class="card-content" style="overflow:hidden;">
+                                        <div class="card-body">
+                                            <div class="media d-flex text-center">
+                                                <div class="align-self-center">
+                                                    <i class="bi bi-eye font-large-2 float-left text-light"
+                                                        style="font-size:25px;"></i>
+                                                </div>
+                                                <div class="media-body px-4 text-center text-light">
+                                                    <center>
+                                                        <h3><b>Exam Review</b></h3>
+                                                    </center>
+                                                    <span> </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+
+</main><!-- End #main -->
+
+
+<script>
+    table = $('#example').DataTable({
+        paging: true
+    });
+
+    table.destroy();
+
+    table = $('#example').DataTable({
+        searching: true
+    });
+</script>
+
+{% endblock content %}

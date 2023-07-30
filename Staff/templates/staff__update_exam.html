@@ -1,0 +1,118 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    #id_exam_duration, #id_class_name, #id_subject{
+        background:#E1E1E1;
+        color:#939291;
+    }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Update Exam</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Update Exam</a></li>
+    </ol>
+    </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-10 px-3 py-3 rounded">
+                    <div class="container" style="max-width:100%;">
+                         <form id="my-form" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{form.class_name|as_crispy_field}}
+                            {{form.subject|as_crispy_field}}
+                            {{form.name|as_crispy_field}}
+
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="Azalea" id="id_Azalea" name="division" {% if 'Azalea' in previous_divisions %}checked{% endif %}>
+                                <label class="form-check-label" for="id_Azalea">
+                                    Azalea
+                                </label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="Zinnia" id="id_Zinnia" name="division" {% if 'Zinnia' in previous_divisions %}checked{% endif %}>
+                                <label class="form-check-label" for="id_Zinnia">
+                                    Zinnia
+                                </label>
+                            </div>
+
+                            <div class="form-check form-check-inline mb-2">
+                                <input class="form-check-input" type="checkbox" value="Camelia" id="id_Camelia" name="division" {% if 'Camelia' in previous_divisions %}checked{% endif %}>
+                                <label class="form-check-label" for="id_Camelia">
+                                    Camelia
+                                </label>
+                            </div>
+
+                            {{form.exam_date|as_crispy_field}}
+                            <div class="form-group">
+                                <label class="col-sm-3 col-form-label">Exam Duration</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" name="hour" id="hour" class="form-control" placeholder="Hour" oninput="set_duration_value()" required>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" name="minutes" id="minutes" class="form-control" placeholder="Min" oninput="set_duration_value()" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                        
+                            {{form.exam_duration|as_crispy_field}}
+
+                            
+                            <div class="form-check form-check-inline mb-2">
+                                {{form.is_publish|as_crispy_field}}                            
+                            </div>
+                            <div class="form-check form-check-inline mb-2">
+                                {{form.is_result_declared|as_crispy_field}}                            
+                            </div>
+                           <center> <input type="submit" value="Submit" class="btn btn-primary text-light px-5 px-3"></center>
+                         </form>
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+
+<script>
+    var default_duration = document.getElementById("id_exam_duration").value;
+    var timeArray = default_duration.split(":");
+    var hour = parseInt(timeArray[0]);
+    var minute = parseInt(timeArray[1]);
+    var second = parseInt(timeArray[2]); 
+    document.getElementById("hour").value = hour;
+    document.getElementById("minutes").value = minute;
+    
+    function set_duration_value() {
+        var hour = document.getElementById("hour").value;
+        var min = document.getElementById("minutes").value;
+        var time = hour + ":" + min;
+        document.getElementById("id_exam_duration").value = time;
+    }
+</script>
+  
+{% endblock content %}
+
+
+

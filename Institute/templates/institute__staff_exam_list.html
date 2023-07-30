@@ -1,0 +1,106 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Exam List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Exam List </a></li>
+            </ol>
+        </nav> 
+    <section class="section dashboard">
+        
+        <div class="row">
+            <!-- Left side columns -->
+            
+            <div class="col-lg-12">
+                <div class="row">
+                    <center>
+                        <h2>{{staff_profile.name}}</h2>
+                    </center>
+
+                    <form action="" method="GET">
+                        {% csrf_token %}
+                        <div class="row">
+                                <div class="col-sm-6">{{filter.form.start_date|as_crispy_field}}</div>
+                                <div class="col-sm-6">{{filter.form.end_date|as_crispy_field}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">{{filter.form.class_name|as_crispy_field}}</div>
+                            <div class="col-sm-4">{{filter.form.subject|as_crispy_field}}</div>
+                            <div class="col-sm-4 py-2 text-center"><input type="submit" value="Apply Filter" class="btn btn-primary mt-4" style="width:100%"></div>            
+                        </div> 
+                        </form>
+                <hr><br>
+                    <div class="container" style=" overflow:scroll;">
+                        <table id="example" class="table table-striped " style="overflow:scroll; width:100%;min-width: max-content;">
+                            <thead>
+                                <tr style="background:#02B4C3;">
+                                        <th scope="col" class="text-center text-white" style="">Sr.No</th> 
+                                        <th scope="col" class="text-center text-white" style="">Exam Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Subject</th>
+                                        <th scope="col" class="text-center text-white" style="">Class Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Division</th>
+                                        <th scope="col" class="text-center text-white" style="">Exam Date</th>
+                                        <th scope="col" class="text-center text-white" style="">Created Date</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if exam_record %}
+                                {% for r in exam_record %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{r.name}}</td>
+                                    <td>{{r.subject}}</td>
+                                    <td>{{r.class_name}}</td> 
+                                    <td>{{r.division}}</td>
+                                    <td>{{r.exam_date}}</td>
+                                    <td>{{r.record_created_date}}</td>
+                                    <td>
+                                    <center> 
+                                        <a href="{% url 'institute__exam_question_ans_review' r.id %}"
+                                        class="btn btn-primary px-3">more</a>  
+                                    </center>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %} 
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+
+
+
+<script>
+    $(document).ready( function () {
+  $('#example').DataTable();
+});
+</script>
+
+<script>
+   $(document).ready( function () {
+  $('#myTable').DataTable({
+    "paging": true,
+    "pageLength": 10,
+    "searching": true
+  });
+});
+</script>
+{% endblock content %}

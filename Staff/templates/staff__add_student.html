@@ -1,0 +1,74 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Add Student</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">add student</a></li>
+    </ol>
+    </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-10 px-3 py-3 rounded">
+                    <div class="container" style="max-width:100%;">
+                         <form id="my-form" method="POST" enctype="multipart/form-data" action="{% url 'add_student' %}">
+                            {% csrf_token %}
+                            {{form|crispy}}
+                           <center> <input type="submit" value="Submit" class="btn btn-primary text-light px-5 px-3"></center>
+                         </form>
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+<script>
+    document.getElementById("id_student_prn_no").value = "{{ auto_student_prn_no }}";
+    document.getElementById("id_username").value = "{{ auto_student_prn_no }}";
+    document.getElementById("id_password1").value = "Pass@123";
+    document.getElementById("id_password2").value = "Pass@123";
+    
+    {% comment %} var class_name = "{{ request.user.class_name }}";  // Set the value of the option you want to select dynamically
+    var select_class = document.getElementById("id_class_name");
+    
+    for (var i = 0; i < select_class.options.length; i++) {
+        if (select_class.options[i].value === class_name) {
+            select_class.options[i].selected = true;
+            break;
+        }
+    } 
+
+        
+    var division = "{{ request.user.division }}";  // Set the value of the option you want to select dynamically
+    var select_division = document.getElementById("id_division");
+    
+    for (var i = 0; i < select_division.options.length; i++) {
+        if (select_division.options[i].value === division) {
+            select_division.options[i].selected = true;
+            break;
+        }
+    } {% endcomment %}
+</script>
+
+{% endblock content %}
+
+
+

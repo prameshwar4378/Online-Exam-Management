@@ -1,0 +1,12 @@
+
+from django.urls import path,include
+from Institute import views
+urlpatterns = [
+    path("",views.institute_dashboard,name="institute_dashboard"), 
+    path("add_staff/",views.add_staff,name="add_staff"), 
+    path("staff_list/",views.staff_list,name="staff_list"), 
+    path("update_staff/<int:id>",views.update_staff,name="update_staff"), 
+    path("institute_staff_dashboard/<int:id>",views.institute_staff_dashboard,name="institute_staff_dashboard"), 
+    path("institute_staff_exam_list/<int:id>",views.staff_exam_list,name="institute_staff_exam_list"), 
+    path("institute__exam_question_ans_review/<int:id>",views.institute__exam_question_ans_review,name="institute__exam_question_ans_review"), 
+]

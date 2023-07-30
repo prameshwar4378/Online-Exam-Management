@@ -1,0 +1,211 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Institute Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Institute Dashboard </a></li>
+            </ol>
+        </nav>
+    </div>
+    <!-- End Page Title -->
+
+
+
+
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <span style="width:100%; height:15px; background-color:#0387B4; position:absolute;"></span>
+                            <div class="card-body">
+                                <h5 class="card-title">Total Exams <span>| Total</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-currency-rupee"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{total_exams}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Card -->
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <span style="width:100%; height:15px; background-color:#0387B4; position:absolute;"></span>
+                            <div class="card-body">
+                                <h5 class="card-title">No of Exams <span>| last 30 days</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-person-add"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{exams_last_30_days}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Card -->
+
+
+                    <!-- Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                            <span style="width:100%; height:15px; background-color:#0387B4; position:absolute;"></span>
+                            <div class="card-body">
+                                <h5 class="card-title">No of Exams <span>| last 7 days</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-person-check"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{exams_last_7_days}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Card -->
+
+
+
+
+
+
+
+                    <!-- Card Start -->
+                    <div class="col-sm-7">
+                        <div class="card recent-sales overflow-auto" style="height:91.5%;">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Exams Scheduled <span>| Class wise</span></h5>
+                                <div>
+                                    <canvas id="exam_scheduled_class_wise" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Card -->
+
+                    <!-- Card Start -->
+                    <div class="col-sm-5">
+                        <div class="card recent-sales overflow-auto" style="height:91.5%;">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Students <span> | Active</span></h5>
+                                <div>
+                                    <canvas id="student-chart" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Card -->
+
+                     
+                    <!--<div class="col-sm-6">
+                        <div class="card recent-sales overflow-auto">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Result <span>| {{exam_name_for_result_chart}}</span></h5>
+                                <div>
+                                    <canvas id="result_chart" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+ 
+                    <div class="col-sm-6"> 
+                        <div class="card recent-sales overflow-auto">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Notifications <span>| Active / Inactive</span></h5>
+                                <div>
+                                    <canvas id="notification_chart" style="width:100%;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  -->
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+
+</main><!-- End #main -->
+<!-- Add the JavaScript code using the context data -->
+<script>
+    var exam_count = {{ exam_count | safe }};
+    var class_names = {{ class_names | safe }};
+
+    var exam_chart = {
+        type: 'bar',
+        data: {
+            datasets: [{
+                data: exam_count,
+                backgroundColor: [
+                    '#054483', '#02BC3D', '#FFC107', '#FF5722', '#9C27B0',
+                    '#3F51B5', '#009688', '#4CAF50', '#607D8B', '#FF9800'
+                ],
+                label: 'Number of Exams'
+            }],
+            labels: class_names
+        },
+        options: {
+            responsive: true
+        }
+    };
+ 
+    var student_gender = {{ student_gender | safe }};
+    var students_count = {{ students_count | safe }};
+
+    var student_chart = {
+        type: 'pie',
+        data: {
+            datasets: [{
+                data: students_count,
+                backgroundColor: [
+                    '#054483', '#02BC3D' 
+                ],
+                label: 'Class Details'
+            }],
+            labels: student_gender
+        },
+        options: {
+            responsive: true
+        }
+    };
+ 
+    
+    window.onload = function () {
+        var ctx1 = document.getElementById('exam_scheduled_class_wise').getContext('2d');
+        window.myPieChart1 = new Chart(ctx1, exam_chart);
+
+        
+        var ctx2 = document.getElementById('student-chart').getContext('2d');
+        window.myPieChart1 = new Chart(ctx2, student_chart);
+
+    };
+     
+</script>
+
+
+{% endblock content %}

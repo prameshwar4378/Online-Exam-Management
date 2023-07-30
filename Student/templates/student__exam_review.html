@@ -1,0 +1,205 @@
+{% extends 'student_base.html' %}
+{% block content %}
+ 
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Exam Review</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Exam Review </a></li>
+            </ol>
+        </nav> 
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12"> 
+                <center>
+                    <b><h1>{{exam_details.name}}</h1></b> <br>
+                </center> 
+                {% if percentage >= 35 %}
+                    <p  class="alert alert-primary">Congratulations... You are eligible for certificate. <a href="{% url 'default_exam_certificate' %}" class="btn btn-primary">Download</a> </p>
+                    {% else %}
+                    <p  class="alert alert-secondary"> Sorry, You are not eligible for ceritficate</a> </p>
+                {% endif %} 
+                    <hr>
+
+                <div class="row g-6 mb-6">
+                     
+                <br>
+                <div class="row">
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b>{{ total_questions }}</b></h3>
+                                                <span>Total Questions:</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:#35A2C5; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b>{{ attempted_questions }}</b></h3>
+                                                <span>Attempted Questions: </span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:red; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b>{{ correct_answers }}</b></h3>
+                                                <span>Correct Answers: </span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:#A935C5; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b> {{ incorrect_answers }}</b></h3>
+                                                <span>Incorrect Answers:</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:#35C5BA; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b>{{ score }} / {{ total_questions }}</b></h3>
+                                                <span>Your Score: </span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:#35C58C; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b> {{ percentage|floatformat:2 }}%</b></h3>
+                                                <span>Percentage:</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:#C5358C; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                {% for exam_review in exam_reviews %}
+                <br><hr>
+                <div class="question alert alert-light" style="box-shadow:0px 0px 10px -4px;">
+                <p><strong>Q{{forloop.counter}}.  {{ exam_review.question.question_text }}</strong></p>
+                <ol type="A">
+                    {% for option in exam_review.question.option_set.all %}
+                    <li>
+                        {% if option.is_correct %}
+                        {% if exam_review.selected_option == option %}
+                            <div class="alert alert-success" role="alert">
+                            {{ option.option_text }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success" role="alert">
+                            {{ option.option_text }}
+                            <strong>(Correct Answer)</strong>
+                            </div>
+                        {% endif %}
+                        {% elif not option.is_correct and exam_review.selected_option == option %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ option.option_text }}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-light" role="alert">
+                            {{ option.option_text }}
+                        </div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ol>
+                </div>
+            {% endfor %}
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+ 
+<script>
+    // Disable right-click context menu
+    window.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
+  
+    // Disable keyboard shortcuts for taking screenshots
+    window.addEventListener('keydown', function(e) {
+      if (e.key === 'PrintScreen' || (e.ctrlKey && e.key === 'c') || (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+      }
+    });
+  </script>
+{% endblock content %}

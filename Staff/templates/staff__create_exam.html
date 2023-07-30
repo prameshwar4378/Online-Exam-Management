@@ -1,0 +1,138 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    #id_exam_duration{
+        background:#E1E1E1;
+        color:#939291;
+    }
+    #div_id_name{
+        margin-top:15px;
+    }
+</style>
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Create Exam</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Create Exam</a></li>
+    </ol>
+    </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-10 px-3 py-3 rounded">
+                    <div class="container" style="max-width:100%;">
+                        
+                        <form  method="POST" enctype="multipart/form-data" action="{% url 'send_class_name_for_subject_create_exam' %}" id="form_class_name" >
+                            {% csrf_token %} 
+                            <!-- Generate select options using the subject_list -->
+                            <label for="id_class_name" style="margin-top:10px;">Class*</label>
+                            <select name="class_name" id="id_class_name" class="form-control mt-2" onChange=sendClassValue() required>
+                                    <option value="">---Select---</option>
+                                    {% for class_name in class_names_list %}
+                                    <option value="{{ class_name }}">{{class_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+
+                         <form id="my-form" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <!-- Generate select options using the subject_list -->
+                            <label for="id_subject" style="margin-top:10px;">Subject*</label>
+                            <select name="subject" id="id_subject" class="form-control mt-2" style=" margin-bottom:10px;" required>
+                                    <option value="">---Select---</option>
+                                    {% for subject in subject_list %}
+                                    <option value="{{ subject }}">{{subject}}</option>
+                                {% endfor %}
+                            </select>
+                            
+                            {{form.name|as_crispy_field}}
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="Azalea" id="id_Azalea" name="division" checked>
+                                <label class="form-check-label" for="id_Azalea">
+                                    Azalea
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" value="Zinnia" id="id_Zinnia" name="division" checked>
+                                <label class="form-check-label" for="id_Zinnia">
+                                    Zinnia
+                                </label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline mb-2">
+                                <input class="form-check-input" type="checkbox" value="Camelia" id="id_Camelia" name="division" checked>
+                                <label class="form-check-label" for="id_Camelia">
+                                    Camelia
+                                </label>
+                            </div>
+                            {{form.exam_date|as_crispy_field}}
+                            <div class="form-group">
+                                <label class="col-sm-3 col-form-label">Exam Duration</label>
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="text" name="hour" id="hour" class="form-control" placeholder="Hour" oninput="set_duration_value()" required>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" name="minutes" id="minutes" class="form-control" placeholder="Min" oninput="set_duration_value()" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                        
+                            {{form.exam_duration|as_crispy_field}}
+                            
+
+                           <center> <input type="submit" value="Submit" class="btn btn-primary text-light px-5 px-3"></center>
+                         </form>
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+<script>
+    document.getElementById("id_exam_duration").value = "00:00";
+    function set_duration_value() {
+        var hour = document.getElementById("hour").value;
+        var min = document.getElementById("minutes").value;
+        var time = hour + ":" + min;
+        document.getElementById("id_exam_duration").value = time;
+    }
+</script>
+
+
+<script>
+    function sendClassValue() {
+        var form_class_name = document.getElementById('form_class_name');
+        document.getElementById('id_class_name');
+        form_class_name.submit();
+    }
+</script>
+
+
+<script data-class-name="{{ session_class_name_for_exam }}">
+    var class_name = document.currentScript.getAttribute('data-class-name');
+    document.getElementById("id_class_name").value = class_name;
+</script>
+
+{% endblock content %}
+
+
+

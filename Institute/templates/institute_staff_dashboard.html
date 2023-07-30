@@ -1,0 +1,127 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Staff Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Staff Dashboard </a></li>
+            </ol>
+        </nav>  
+    </div>
+    <!-- End Page Title -->
+
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                 
+                <div class="row mt-2">
+                    <h4>Profile Details</h4>
+                    <hr> 
+                    <center>
+                        <h1 class="card-title" style="font-size:32px;"><b>{{profile.name}}</b></h1>
+                    </center>
+
+                    <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="0" data-aos-duration="1000">
+                        <div class="card text-center">
+                            <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                                <b>Class</b>
+                            </div>
+                            <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                                data-aos-duration="800">
+                                <h1 class="card-title" style="font-size:32px;"><b>{{profile.class_name}} Standard</b></h1>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1000">
+                        <div class="card text-center">
+                            <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                                <b>Division</b>
+                            </div>
+                            
+                            <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                                data-aos-duration="800">
+                                <h1 class="card-title" style="font-size:32px;"><b>{{profile.division}}</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                     
+                    <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1000">
+                        <div class="card text-center">
+                            <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                                <b>Total Students</b>
+                            </div>
+
+                            <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="1200"
+                                data-aos-duration="800">
+                                <h1 class="card-title" style="font-size:32px;"><b>{{total_student_in_class}}</b></h1>
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+                
+                <div class="row mt-2">
+                    <h4>Exams Details</h4>
+                    <hr>
+                    <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="0" data-aos-duration="1000">
+                        <div class="card text-center">
+                            <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                                <b>Total Exams Created</b>
+                            </div>
+                            <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                                data-aos-duration="800">
+                                <h1 class="card-title" style="font-size:32px;"><b>{{total_exams}}</b></h1>
+                                <hr>
+                                <a href="{% url 'institute_staff_exam_list' profile.id %}" style="text-decoration:none;">more details<i class="fa fa-person"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="0" data-aos-duration="1000">
+                        <div class="card text-center">
+                            <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                                <b>Exams Published</b>
+                            </div>
+                            <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                                data-aos-duration="800">
+                                <h1 class="card-title" style="font-size:32px;"><b>{{total_published_exams}}</b></h1>
+                                <hr>
+                                <a href="{% url 'institute_staff_exam_list' profile.id %}" style="text-decoration:none;">more details<i class="fa fa-person"></i></a>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-md mt-2" data-aos="zoom-in" data-aos-delay="200" data-aos-duration="1000">
+                        <div class="card text-center">
+                            <div class="card-header alert-dark text-light" style="background:#4678A4;">
+                                <b>Result Decleared</b>
+                            </div>
+                            
+                            <div class="card-header  py-2" data-aos="fade-down" data-aos-easing="linear" data-aos-delay="800"
+                                data-aos-duration="800">
+                                <h1 class="card-title" style="font-size:32px;"><b>{{total_result_declared_exams}}</b></h1>
+                                <hr>
+                                <a href="{% url 'institute_staff_exam_list' profile.id %}" style="text-decoration:none;">more details<i class="fa fa-person"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+      
+
+</main><!-- End #main -->
+
+{% endblock content %}

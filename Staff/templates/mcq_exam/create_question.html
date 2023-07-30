@@ -1,0 +1,93 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<style>
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Question Paper</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Question Paper </a></li>
+            </ol>
+        </nav>
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <form method="post" action="{% url 'create_question' %}">
+                    {% csrf_token %}
+
+                    <label for="question_text">Question:</label>
+                    <input type="textarea" name="question_text" class="form-control" required><br>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="option1">Option 1:</label>
+                            <input type="text" name="option_text" class="form-control" required><br>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="option2">Option 2:</label>
+                            <input type="text" name="option_text" class="form-control" required><br>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="option3">Option 3:</label>
+                            <input type="text" name="option_text" class="form-control" required><br>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="option4">Option 4:</label>
+                            <input type="text" name="option_text" class="form-control" required><br>
+                        </div>
+                        <div class="col-sm-12">
+                            <label for="correct_answer">Correct Answer:</label>
+                            <select name="correct_answer" class="form-control bg-success text-light" required>
+                                <option value="">--- Select ---</option>
+                                <option value="0">Option 1</option>
+                                <option value="1">Option 2</option>
+                                <option value="2">Option 3</option>
+                                <option value="3">Option 4</option>
+                            </select><br>
+                        </div>
+                    </div>
+                    <center>
+                        <button type="submit" class="btn btn-primary">Create Question</button>
+                    </center>
+                </form>
+
+                <br><br>
+                {% for question in questions %}
+                <div class="alert alert-light" style="box-shadow:0px 0px 10px -4px;" id="question-{{ question.id }}">
+                    <h2>Q{{forloop.counter}}. {{ question.question_text }}</h2>
+                    <ol type="A">
+                        {% for option in question.option_set.all %}
+                        {% if option.is_correct %}
+                        <li class="alert alert-success" >
+                            <strong>{{ option.option_text }}</strong>
+                        </li>
+                        {% else %}
+                        <li class="alert alert-warning" >
+                            {{ option.option_text }}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ol>
+                </div>
+                {% endfor %}
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+
+</main><!-- End #main -->
+
+ 
+{% endblock content %}

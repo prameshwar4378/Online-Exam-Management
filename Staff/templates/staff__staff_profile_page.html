@@ -1,0 +1,228 @@
+{% extends 'staff_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    body {
+        background-color: #f9f9fa
+    }
+    
+    .padding {
+        padding: 3rem !important
+    }
+    
+    .user-card-full {
+        overflow: hidden;
+    }
+    
+    .card {
+        border-radius: 5px;
+        -webkit-box-shadow: 0 0px 15px -3px;
+        box-shadow: 0 0px 15px -3px;
+        border: none;
+        margin-bottom: 30px;
+    }
+    
+    .m-r-0 {
+        margin-right: 0px;
+    }
+    
+    .m-l-0 {
+        margin-left: 0px;
+    }
+    
+    .user-card-full .user-profile {
+        border-radius: 5px 0 0 5px;
+    }
+    
+    .bg-c-lite-green {
+            background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+        background: linear-gradient(to right, #1F4D75, #109292);
+    }
+    
+    .user-profile {
+        padding: 20px 0;
+    }
+    
+    .card-block {
+        padding: 1.25rem;
+    }
+    
+    .m-b-25 {
+        margin-bottom: 25px;
+    }
+    
+    .img-radius {
+        border-radius: 5px;
+    }
+    
+    
+     
+    h6 {
+        font-size: 14px;
+    }
+    
+    .card .card-block p {
+        line-height: 25px;
+    }
+    
+    @media only screen and (min-width: 1400px){
+    p {
+        font-size: 14px;
+    }
+    }
+    
+    .card-block {
+        padding: 1.25rem;
+    }
+    
+    .b-b-default {
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .m-b-20 {
+        margin-bottom: 20px;
+    }
+    
+    .p-b-5 {
+        padding-bottom: 5px !important;
+    }
+    
+    .card .card-block p {
+        line-height: 25px;
+    }
+    
+    .m-b-10 {
+        margin-bottom: 10px;
+    }
+    
+    .text-muted {
+        color: #919aa3 !important;
+    }
+    
+    .b-b-default {
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .f-w-600 {
+        font-weight: 600;
+    }
+    
+    .m-b-20 {
+        margin-bottom: 20px;
+    }
+    
+    .m-t-40 {
+        margin-top: 20px;
+    }
+    
+    .p-b-5 {
+        padding-bottom: 5px !important;
+    }
+    
+    .m-b-10 {
+        margin-bottom: 10px;
+    }
+    
+    .m-t-40 {
+        margin-top: 20px;
+    }
+    
+    .user-card-full .social-link li {
+        display: inline-block;
+    }
+    
+    .user-card-full .social-link li a {
+        font-size: 20px;
+        margin: 0 10px 0 0;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    
+    
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Staff Profile</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Staff Profile</a></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="page-content page-container" id="page-content">
+                    <div class="padding">
+                        <div class="row container d-flex justify-content-center">
+                            <div class="col-xl-8 col-md-12">
+                                <div class="card user-card-full">
+                                    <div class="row m-l-0 m-r-0">
+                                        <div class="col-sm-4 bg-c-lite-green user-profile">
+                                            <div class="card-block text-center text-white">
+                                                <div class="m-b-25">
+                                                    <img src="https://img.icons8.com/bubbles/100/000000/user.png"
+                                                        class="img-radius" alt="User-Profile-Image">
+                                                </div>
+                                                <h5 class="f-w-600">{{request.user.name}}</h5>
+                                                <p style="color:#C3C6C6">{% if request.user.designation %}{{request.user.designation}} {% endif %}</p> 
+                                                 
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="card-block">
+                                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="m-b-10 f-w-600">Username</p>
+                                                        <h6 class="text-muted f-w-400">{% if request.user.username %}{{request.user.username}}{% else %}---{% endif %}</h6>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <p class="m-b-10 f-w-600">Class Teacher</p>
+                                                        <h6 class="text-muted f-w-400">{% if request.user.class_name %}{{request.user.class_name}} Standard {% else %}---{% endif %}</h6>
+                                                    </div> 
+                                                    <div class="col-sm-4">
+                                                        <p class="m-b-10 f-w-600">Division</p>
+                                                        <h6 class="text-muted f-w-400">{% if request.user.division %}{{request.user.division}} {% else %}---{% endif %}</h6>
+                                                    </div> 
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <p class="m-b-10 f-w-600">Gender</p>
+                                                        <h6 class="text-muted f-w-400">{% if request.user.gender %}{{request.user.gender}}  {% else %}---{% endif %}</h6>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <p class="m-b-10 f-w-600">Email</p>
+                                                        <h6 class="text-muted f-w-400">{% if request.user.email %}{{request.user.email}}  {% else %}---{% endif %}</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 text-center mt-3">
+                                                        <a href="{% url 'update_staff_password' %}" class="btn btn-primary">Update Password</a>
+                                                    </div>
+                                                </div>
+                                                 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+
+
+{% endblock content %}

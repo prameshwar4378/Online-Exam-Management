@@ -1,0 +1,25 @@
+from django.urls import path
+from .import views
+urlpatterns = [ 
+    path("",views.staff_dashboard,name="staff_dashboard"), 
+    path("staff_profile/",views.staff_profile,name="staff_profile"), 
+    path("update_staff_password/",views.update_staff_password,name="update_staff_password"), 
+    path("add_student/",views.add_student,name="add_student"), 
+    path("delete_student/<int:id>",views.delete_student,name="delete_student"),
+    path("student_list/",views.student_list,name="student_list"), 
+    path("update_student/<int:id>",views.update_student,name="update_student"),
+    path("create_exam/",views.create_exam,name="create_exam"), 
+    path("update_exam/<int:id>",views.update_exam,name="update_exam"),
+    path("add_subject/",views.add_subject,name="add_subject"),
+    path("update_subject/<int:id>",views.update_subject,name="update_subject"),
+    path("delete_subject/<int:id>",views.delete_subject,name="delete_subject"),
+    path("update_student/<int:id>",views.update_student,name="update_student"),
+    path("delete_exam/<int:id>",views.delete_exam,name="delete_exam"),
+    path("exam_dashboard/<int:exam_id>",views.exam_dashboard,name="exam_dashboard"),
+    path("staff_exam_list/",views.staff_exam_list,name="staff_exam_list"), 
+    path("create_question/",views.create_question,name="create_question"), 
+    path("select_exam_for_create_question/",views.select_exam_for_create_question,name="select_exam_for_create_question"), 
+    path("select_exam_for_exam_dashboard/",views.select_exam_for_exam_dashboard,name="select_exam_for_exam_dashboard"), 
+    path("export_exam_data_to_pdf/<int:exam_id>",views.export_exam_data_to_pdf,name="export_exam_data_to_pdf"),
+    path("send_class_name_for_subject_create_exam/",views.send_class_name_for_subject_create_exam,name="send_class_name_for_subject_create_exam"),
+] 

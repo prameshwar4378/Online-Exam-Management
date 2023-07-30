@@ -1,0 +1,85 @@
+{% extends 'staff_base.html' %}
+{% block content %}
+<style>
+
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Student List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Student List </a></li>
+            </ol>
+        </nav> 
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="container" style=" overflow:scroll;">
+                        <table id="example" class="table table-striped " style="overflow:scroll; width:100%;min-width: max-content;">
+                            <thead>
+                                <tr style="background:#02B4C3;">
+                                        <th scope="col" class="text-center text-white" style="">Username</th> 
+                                        <th scope="col" class="text-center text-white" style="">Student Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Class</th>
+                                        <th scope="col" class="text-center text-white" style="">Division</th>
+                                        <th scope="col" class="text-center text-white" style="">Student PRN No</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if rec %}
+                                {% for r in rec %}
+                                <tr>
+                                    <td>{{r.username}}</td>
+                                    <td>{{r.name}}</td>
+                                    <td>{{r.class_name}}</td> 
+                                    <td>{{r.division}}</td>
+                                    <td>{{r.student_prn_no}}</td>
+                                    <td>
+                                    <center>
+                                        <a href="{% url 'update_student' r.id %}"
+                                        class="btn btn-warning px-3">Update</a>  
+                                        <a href="{% url 'delete_student' r.id %}"
+                                        class="btn btn-danger px-3">Delete</a>   
+                                    </center>
+
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %} 
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+
+
+
+
+
+<script>
+    $(document).ready( function () {
+  $('#example').DataTable();
+});
+</script>
+
+<script>
+   $(document).ready( function () {
+  $('#myTable').DataTable({
+    "paging": true,
+    "pageLength": 10,
+    "searching": true
+  });
+});
+</script>
+{% endblock content %}

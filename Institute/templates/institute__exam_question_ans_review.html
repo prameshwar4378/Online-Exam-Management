@@ -1,0 +1,61 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<style>
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Question Review</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Question Review </a></li>
+            </ol>
+        </nav>
+
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                 
+                <br><br>
+                {% if questions %}
+                {% for question in questions %}
+                <div class="alert alert-light" style="box-shadow:0px 0px 10px -4px;" id="question-{{ question.id }}">
+                    <h2>Q{{forloop.counter}}. {{ question.question_text }}</h2>
+                    <ol type="A">
+                        {% for option in question.option_set.all %}
+                        {% if option.is_correct %}
+                        <li class="alert alert-success" >
+                            <strong>{{ option.option_text }}</strong>
+                        </li>
+                        {% else %}
+                        <li class="alert alert-warning" >
+                            {{ option.option_text }}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ol>
+                </div>
+                {% endfor %}
+                {% else %}
+                <center>
+                    <h3>No Questions Available</h3>
+                </center>
+                {% endif %}
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+
+</main><!-- End #main -->
+
+ 
+{% endblock content %}

@@ -5,6 +5,9 @@ from .models import CustomUser,Exam,Question
 from django.contrib.auth import login as authlogin, authenticate,logout as DeleteSession
 from .filters import Exam_List_Filter
 from django.contrib.auth.decorators import login_required, user_passes_test
+import openpyxl
+from django.contrib.auth.hashers import make_password
+
 
 def is_institute(user):
     return user.is_authenticated and hasattr(user, 'is_institute') and user.is_institute
@@ -46,8 +49,7 @@ def index(request):
 from datetime import date, timedelta
 # Create your views here.
 @institute_required
-def institute_dashboard(request):
-
+def institute_dashboard(request): 
     total_exams = Exam.objects.count()
     last_30_days = date.today() - timedelta(days=30)
 
@@ -176,3 +178,72 @@ def institute__exam_question_ans_review(request,id):
     exam_details = Question.objects.filter(exam=exam_record)
     context = {'exam_details': exam_details, 'exam': exam_record, 'questions': questions_record}
     return render(request, 'institute__exam_question_ans_review.html', context)
+
+
+
+@institute_required
+def student_bulk_registration(request):
+    if request.method == "POST":
+        excel_file = request.FILES.get('excel_file')
+        if excel_file:
+            try:
+                workbook = openpyxl.load_workbook(excel_file)
+                worksheet = workbook.active
+                pwd="Pass@123"
+                hashed_password = make_password(pwd)
+                data_to_insert = []
+                for row in worksheet.iter_rows(min_row=2, values_only=True):
+                    prn_no = row[0]
+                    name = row[1]
+                    division = row[2]
+                    roll_no = row[3]
+                    gender = row[4]
+                    class_name = row[5]
+                    # Add more fields if you have more columns in the Excel file
+                    if prn_no:
+                        print(prn_no)
+                        data_to_insert.append(CustomUser(username=prn_no,password=hashed_password,student_prn_no=prn_no,name=name, division=division,roll_no=roll_no,gender=gender,class_name=class_name,is_student=True))
+                
+                CustomUser.objects.bulk_create(data_to_insert)
+                messages.success(request, 'Data Imported and Updated Successfully')
+            except Exception as e:
+                messages.error(request, f'Error occurred during import: {str(e)}')
+
+        else:
+            messages.error(request, 'No file selected.')
+        
+        return redirect('/Institute/student_bulk_registration')
+
+    return render(request, 'institute__student_bulk_registration.html')
+ 
+
+from django.template.loader import get_template
+from django.http import HttpResponse
+from io import BytesIO
+from xhtml2pdf import pisa 
+
+def export_students(request): 
+    template = get_template('institute__export_students.html')
+    try:
+        if request.method=="POST": 
+            class_name=request.POST.get('class_name')
+            division_name=request.POST.get('division_name')
+            students=CustomUser.objects.filter(class_name=class_name,division=division_name,is_student=True)
+    except CustomUser.DoesNotExist:
+        messages.warning(request, "Student Not Exist")
+        return redirect("/Institute")
+
+     
+    context = {
+        "students":students,
+        "class_name":class_name,
+        "division":division_name
+    }  
+    html = template.render(context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Ram.pdf"'
+    pdf = pisa.CreatePDF(BytesIO(html.encode('utf-8')), response)
+    if not pdf.err:
+        return response
+    return HttpResponse('Error generating PDF file: %s' % pdf.err, status=400)
+

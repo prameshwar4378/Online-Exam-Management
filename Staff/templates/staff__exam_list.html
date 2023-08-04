@@ -37,6 +37,7 @@
                                 <thead>
                                     <tr style="background:#02B4C3;">
                                         <th scope="col" class="text-center text-white" style="">Sr.No</th>
+                                        <th scope="col" class="text-center text-white" style="">Exam Link</th>
                                         <th scope="col" class="text-center text-white" style="">Exam Title</th>
                                         <th scope="col" class="text-center text-white" style="">Class Name</th>
                                         <th scope="col" class="text-center text-white" style="">Division</th>
@@ -52,6 +53,10 @@
                                     {% for r in rec %}
                                     <tr>
                                         <td>{{forloop.counter}}</td>
+                                        <td>
+                                            <input type="hidden" id="examLink_{{forloop.counter}}" class="form-control" value="{{exam_url}}{{r.id}}" readonly>
+                                            <button class="btn btn-primary" onclick="copyToClipboard('examLink_{{forloop.counter}}')">Copy Link</button>
+                                        </td>
                                         <td>{{r.name}}</td>
                                         <td>{{r.class_name}}</td>
                                         <td>{{r.division}}</td>
@@ -100,7 +105,33 @@
 
 </main><!-- End #main -->
 
+<script>
+    function copyToClipboard(elementId) {
+        var inputElement = document.getElementById(elementId);
 
+        // Create a new textarea element to hold the text
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = inputElement.value;
+
+        // Append the textarea element to the document
+        document.body.appendChild(tempTextArea);
+
+        // Select the text inside the textarea
+        tempTextArea.select();
+
+        try {
+            // Execute the copy command using the Clipboard API
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'Link copied to clipboard!' : 'Copying failed. Please try again.';
+            alert(msg);
+        } catch (err) {
+            console.error('Failed to copy link:', err);
+        } finally {
+            // Remove the temporary textarea from the document
+            document.body.removeChild(tempTextArea);
+        }
+    }
+</script>
 
 
 

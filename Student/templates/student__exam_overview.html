@@ -1,0 +1,61 @@
+{% extends 'student_base.html' %}
+{% block content %}
+ 
+<style>
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
+
+    /* Apply the animation to the button */
+    .blinking-button {
+        animation: blink 0.5s infinite;
+    }
+</style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Exam Overview</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Exam Overview </a></li>
+            </ol>
+        </nav> 
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12"> 
+                <div class="row">
+                    <div class="col-sm-12 text-right" style="width:100%; text-align:right;">
+                        <a href="{% url 'start_exam' exam.id %}" class="btn btn-primary blinking-button" style="width:200px;">Start Exam</a>
+                    </div>
+                </div>
+
+                 <center>
+                    <h3 class="alert alert-primary mt-3"><strong>{{exam.name}}</strong></h3>
+                 </center>
+                 <div class="row">
+                 <div class="col-sm-6">
+                    <p class='alert alert-success'>Subject : <b>{{exam.subject}}</b></p>
+                 </div>
+                 <div class="col-sm-6">
+                    <p class='alert alert-success'>Duration : <b> {{exam.exam_duration}}</b></p>
+                 </div>
+                 </div>
+                 <div class="row">
+                 <div class="col-sm-6">
+                    <p class='alert alert-success'>Total Questions : <b>{{total_questions}}</b></p>
+                 </div>
+                 <div class="col-sm-6">
+                    {% comment %} <p class='alert alert-success'>Duration : <b> 1:20 min</b></p> {% endcomment %}
+                 </div>
+                 </div>
+            </div>
+        </div><!-- End Left side columns -->
+    </section>
+
+</main><!-- End #main -->
+   
+{% endblock content %}

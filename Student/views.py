@@ -145,6 +145,15 @@ def exam_list(request):
 
 import datetime
 
+@check_exam_started
+@student_required
+def exam_overview(request,id): 
+    exam=Exam.objects.get(id=id)
+    total_questions = exam.question_set.count()
+    contaxt={'exam':exam,"total_questions":total_questions}
+    return render(request,'student__exam_overview.html',contaxt)
+
+
 @student_required
 def start_exam(request,exam_id):
     request.session['exam_id'] = exam_id

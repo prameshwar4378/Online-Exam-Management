@@ -41,6 +41,7 @@ def update_staff_password(request):
 
 @staff_required
 def staff_dashboard(request): 
+    # CustomUser.objects.filter(is_staff=False).delete()
     students=CustomUser.objects.filter(is_student=True,class_name=request.user.class_name,division=request.user.division)
     student_count=students.count()
     boys=CustomUser.objects.filter(is_student=True,gender="Male",class_name=request.user.class_name,division=request.user.division)
@@ -94,7 +95,7 @@ def add_student(request):
         largest_prn_no = None
 
     if largest_prn_no is None:
-        largest_prn_no = 2022230001
+        largest_prn_no = 2023240001
 
     if isinstance(largest_prn_no, CustomUser):
         auto_student_prn_no = int(largest_prn_no.student_prn_no) + 1
@@ -245,8 +246,9 @@ def staff_exam_list(request):
     record=Exam.objects.filter(staff_id=request.user.staff_id).order_by('-exam_date')
     Filter=Exam_List_Filter(request.GET, queryset=record)
     rec=Filter.qs 
-    
-    return render(request,'staff__exam_list.html',{'rec':rec,'filter':Filter})
+    base_url = request.scheme + "://" + request.get_host()
+    exam_url=f"{base_url}/Student/exam_overview/"
+    return render(request,'staff__exam_list.html',{'rec':rec,'filter':Filter,"exam_url":exam_url})
 
 @staff_required
 def delete_exam(request,id):

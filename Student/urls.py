@@ -13,4 +13,5 @@ urlpatterns = [
     path("result_review_list/",views.result_review_list,name="result_review_list"),  
     path("ranked_in_exam_certificate/<int:id>",views.ranked_in_exam_certificate,name="ranked_in_exam_certificate"),  
     path("default_exam_certificate/",views.default_exam_certificate,name="default_exam_certificate"),  
+    path("exam_overview/<int:id>",views.exam_overview,name="exam_overview"),  
 ]

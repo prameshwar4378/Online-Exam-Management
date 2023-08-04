@@ -1,3 +1,12 @@
-institute dashboard graph pending
-add date filters on institute proflie
+ 
 adding not class teacher field in class techer name 
+
+student registration fields
+    username,student_prn_no
+    name
+    class_name
+    division
+    roll_no
+    gender
+    is_student
+

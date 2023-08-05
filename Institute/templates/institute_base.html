@@ -11,7 +11,7 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
+    <link href="img/favicon.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
@@ -286,11 +286,14 @@
             <option value="Zinnia">Zinnia</option>
             <option value="Camelia">Camelia</option> 
           </select>
-      </div>
+          <center>
+          <input type="submit" value="Export Student" class="btn btn-primary mt-3">
+          <a href="{% url 'export_staff' %}" class="btn btn-primary mt-3">Export Staff Details</a>
+          </center>
+      </form>
+    </div>
       <div class="modal-footer">
         <button  type="button" class="btn btn-secondary bgcolor px-3" data-dismiss="modal">Close</button>
-        <input type="submit" value="Submit">
-      </form>
       </div>
     </div>
   </div>

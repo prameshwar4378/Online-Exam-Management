@@ -247,3 +247,24 @@ def export_students(request):
         return response
     return HttpResponse('Error generating PDF file: %s' % pdf.err, status=400)
 
+
+def export_staff(request): 
+    template = get_template('institute__export_staff.html')
+    try: 
+        staff=CustomUser.objects.filter(is_staff=True)
+    except CustomUser.DoesNotExist:
+        messages.warning(request, "Staff Not Exist")
+        return redirect("/Institute")
+
+     
+    context = {
+        "staff":staff, 
+    }  
+    html = template.render(context)
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Staff Details.pdf"'
+    pdf = pisa.CreatePDF(BytesIO(html.encode('utf-8')), response)
+    if not pdf.err:
+        return response
+    return HttpResponse('Error generating PDF file: %s' % pdf.err, status=400)
+

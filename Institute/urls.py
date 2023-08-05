@@ -11,4 +11,5 @@ urlpatterns = [
     path("institute__exam_question_ans_review/<int:id>",views.institute__exam_question_ans_review,name="institute__exam_question_ans_review"), 
     path("student_bulk_registration/",views.student_bulk_registration,name="student_bulk_registration"), 
     path("export_students/",views.export_students,name="export_students"), 
+    path("export_staff/",views.export_staff,name="export_staff"), 
 ]

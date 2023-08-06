@@ -43,6 +43,7 @@ def update_student_password(request):
     return render(request, 'student__update_student_password.html', {'form': form})
 
 from django.db.models import Max, Count, F, Q
+from django.core.exceptions import ObjectDoesNotExist
 
 @check_exam_started
 @student_required
@@ -50,7 +51,9 @@ def student_dashboard(request):
     # UserAnswer.objects.all().delete()
     try:
         subject_list=Subjects.objects.filter(class_name=request.user.class_name)
+        
         latest_user_answer = UserAnswer.objects.filter(student=request.user).latest('id')
+
         student_id = request.user.id
         exam_id = latest_user_answer.exam.id
         subject_name = latest_user_answer.exam.subject
@@ -63,7 +66,7 @@ def student_dashboard(request):
         if request.method=="POST":
             if 'subject_name' in request.POST:
                 subject_name=request.POST.get('subject_name')
-            
+    
         # Calculate the exam percentage for each exam
         exams = Exam.objects.filter(useranswer__student=request.user,subject=subject_name).annotate(
             total_questions=Count('question'),
@@ -117,7 +120,7 @@ def student_dashboard(request):
 
     except UserAnswer.DoesNotExist:
         # Handle the case when no UserAnswer is found for the student 
-        latest_user_answer = None 
+        latest_user_answer = None  
         context = {
             'latest_user_answer': latest_user_answer,
             'exam_dates': [],
@@ -132,8 +135,7 @@ def exam_list(request):
     # UserAnswer.objects.all().delete()
     runing_exam=False
     exam_id=request.session.get('exam_id')
-    exam_name="None"
-    print(exam_id)
+    exam_name="None" 
     if exam_id:
         exam_name=Exam.objects.get(id=exam_id)
         exam_name=exam_name.name
@@ -144,18 +146,32 @@ def exam_list(request):
     return render(request,'student__exam_list.html',{'rec':remaining_exams,"runing_exam":runing_exam,'exam_id':exam_id,'exam_name':exam_name})
 
 import datetime
+from django.core.exceptions import ObjectDoesNotExist
 
 @check_exam_started
 @student_required
-def exam_overview(request,id): 
-    exam=Exam.objects.get(id=id)
+def exam_overview(request, id):
+    exam = Exam.objects.get(id=id)
     total_questions = exam.question_set.count()
-    contaxt={'exam':exam,"total_questions":total_questions}
-    return render(request,'student__exam_overview.html',contaxt)
+    exam_duration=str(exam.exam_duration)[0:5] 
+    try:
+        exam_submitted = UserAnswer.objects.filter(exam=exam, student=request.user).exists()
+    except ObjectDoesNotExist:
+        exam_submitted = False
+
+    context = {'exam': exam, 'total_questions': total_questions, 'exam_submitted': exam_submitted,'exam_duration':exam_duration}
+    return render(request, 'student__exam_overview.html', context)
+
 
 
 @student_required
 def start_exam(request,exam_id):
+    
+    if UserAnswer.objects.filter(exam=exam_id,student=request.user):
+        messages.warning(request,"Opps You were alredy submited this exam") 
+        request.session['exam_exist']=False
+        return redirect('/Student/student_exam_list/')
+    
     request.session['exam_id'] = exam_id
     questions = Question.objects.filter(exam=exam_id)
     exam=Exam.objects.get(id=exam_id)
@@ -193,8 +209,8 @@ def submit_exam(request):
         messages.warning(request,"Select Appropriate Exam...!")
         return redirect('/Student/student_exam_list/')
     
-    if UserAnswer.objects.filter(exam_id=exam_id,student_id=request.user.id):
-        messages.warning(request,"Opps You were alredy submited this exam")
+    if UserAnswer.objects.filter(exam=exam_id,student=request.user):
+        messages.warning(request,"Opps You were alredy submited this exam") 
         request.session['exam_exist']=False
         return redirect('/Student/student_exam_list/')
     
@@ -314,7 +330,7 @@ def result_review_list(request):
     # Get submitted exams by the student
     submitted_exam_ids = UserAnswer.objects.filter(student_id=user).values_list('exam_id', flat=True)
     # Retrieve available exams and annotate with the number of students who took each exam
-    available_exams = Exam.objects.filter(id__in=submitted_exam_ids,is_result_declared=True).annotate(num_students=Count('useranswer'))
+    available_exams = Exam.objects.filter(id__in=submitted_exam_ids).annotate(num_students=Count('useranswer'))
     # Sort the exams based on the number of students who took them in descending order
     available_exams = available_exams.order_by('-num_students')
 

@@ -4,7 +4,6 @@ from .forms import Institute_Registration,Update_institute_Form
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-
 # Create your views here.
 def developer_dashboard(request):
     return render(request,"developer__developer_dashboard.html")

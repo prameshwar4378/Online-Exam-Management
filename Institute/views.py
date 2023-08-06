@@ -241,7 +241,7 @@ def export_students(request):
     }  
     html = template.render(context)
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="Ram.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="{class_name} - {division_name}.pdf"'
     pdf = pisa.CreatePDF(BytesIO(html.encode('utf-8')), response)
     if not pdf.err:
         return response

@@ -4,6 +4,8 @@ from django.contrib import messages
 from Institute.models import CustomUser,Exam,Question,Option,UserAnswer,Subjects
  
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.cache import cache_page
+
 
 def is_staff(user):
     return user.is_authenticated and hasattr(user, 'is_staff') and user.is_staff
@@ -436,3 +438,74 @@ def export_exam_data_to_pdf(request, exam_id):
         return response
     return HttpResponse('Error generating PDF file: %s' % pdf.err, status=400)
 
+
+
+from django.db.models import Count
+
+def student_individual_exam_review(request, exam_id, student_id):
+    student = student_id  # Assuming the user is authenticated
+    exam = get_object_or_404(Exam, id=exam_id)
+    exam_reviews = UserAnswer.objects.filter(student=student, exam=exam)
+
+    score = 0
+    attempted_questions = 0
+    correct_answers = 0
+    incorrect_answers = 0
+    total_questions = exam_reviews.count()
+
+    for exam_review in exam_reviews:
+        attempted_questions += 1
+        if exam_review.selected_option.is_correct:
+            score += 1
+            correct_answers += 1
+        else:
+            incorrect_answers += 1
+
+    percentage = round((score / total_questions) * 100, 2)
+
+    # Retrieve users with higher scores than the authenticated user for the same exam
+    higher_score_users = UserAnswer.objects.filter(
+        exam=exam,
+        selected_option__is_correct=True,
+    ).values('student__id').annotate(score_count=Count('selected_option__is_correct')).filter(score_count__gt=score)
+
+    # Calculate the rank of the authenticated user
+    rank = higher_score_users.count() + 1
+    request.session['set_rank_for_certificate']=rank
+
+    if percentage >= 90:
+        grade= "A++"
+    elif 80 <= percentage < 90:
+        grade= "A+"
+    elif 70 <= percentage < 80:
+        grade= "B++"
+    elif 60 <= percentage < 70:
+        grade= "B+"
+    elif 50 <= percentage < 60:
+        grade= "C++"
+    elif 40 <= percentage < 50:
+        grade= "C+"
+    elif 30 <= percentage < 40:
+        grade= "D" 
+    else:
+        grade= "Fail" 
+
+    return render(request, 'staff__student_individual_exam_review.html', {
+        'exam_reviews': exam_reviews,
+        'exam_details': exam,
+        'score': score,
+        'attempted_questions': attempted_questions,
+        'correct_answers': correct_answers,
+        'incorrect_answers': incorrect_answers,
+        'total_questions': total_questions,
+        'percentage': percentage,
+        'rank': rank,
+        'grade':grade
+    })
+
+
+def delete_submited_exam(request, student_id, exam_id):
+    UserAnswer.objects.filter(student_id=student_id,exam_id=exam_id).delete()
+    student_name=CustomUser.objects.get(id=student_id)
+    messages.success(request,f"Now {student_name.name} Apear for retake exam")
+    return redirect(f"/Staff/exam_dashboard/{exam_id}")

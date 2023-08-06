@@ -149,9 +149,9 @@
 </div>
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
-
+  index
   <div class="d-flex align-items-center justify-content-between">
-      <a href=" " class="logo d-flex align-items-center">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
           <center>
             <img src="{% static 'img/logo.jpg' %}" alt="IMS - Logo">
           </center>
@@ -218,7 +218,7 @@
   
       <li class="nav-item">
         <a class="nav-link " href="{% url 'add_staff' %}">
-          <i class="bi bi-card-list"></i>
+          <i class="bi bi-person-fill-add"></i>
             <span>Add Staff</span>
         </a>
       </li>
@@ -232,17 +232,30 @@
 
       <li class="nav-item">
         <a class="nav-link " href="{% url 'student_bulk_registration' %}">
-          <i class="bi bi-card-list"></i>
+          <i class="bi bi-box-arrow-in-down"></i>
             <span>Student Bulk Admission</span>
         </a>
       </li>
  
       <li class="nav-item">
-        <a class="nav-link " href="#"  data-toggle="modal" data-target="#export_students_model">
-          <i class="bi bi-card-list"></i>
-            <span>Export Student</span>
+        <a class="nav-link collapsed" data-bs-target="#exam-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-box-arrow-right"></i><span>Export</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
+        <ul id="exam-nav" class="nav-content collapse " data-bs-parent="#exam-nav">
+          <li>
+            <a class="nav-link " href="#"  data-toggle="modal" data-target="#export_students_model">
+              <i class="bi bi-people" style="font-size:15px;"></i>
+                <span>Student</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'export_staff' %}" style="text-decoration:none;">
+                <i class="bi bi-person" style="font-size:15px;"></i><span>Staff</span>
+            </a>
+          </li>
+  
+        </ul>
+      </li><!-- End Tables Nav -->
  
     
   </ul>
@@ -287,8 +300,7 @@
             <option value="Camelia">Camelia</option> 
           </select>
           <center>
-          <input type="submit" value="Export Student" class="btn btn-primary mt-3">
-          <a href="{% url 'export_staff' %}" class="btn btn-primary mt-3">Export Staff Details</a>
+          <input type="submit" value="Export Student" class="btn btn-primary mt-3"> 
           </center>
       </form>
     </div>

@@ -22,4 +22,6 @@ urlpatterns = [
     path("select_exam_for_exam_dashboard/",views.select_exam_for_exam_dashboard,name="select_exam_for_exam_dashboard"), 
     path("export_exam_data_to_pdf/<int:exam_id>",views.export_exam_data_to_pdf,name="export_exam_data_to_pdf"),
     path("send_class_name_for_subject_create_exam/",views.send_class_name_for_subject_create_exam,name="send_class_name_for_subject_create_exam"),
+    path("student_individual_exam_review/<int:exam_id>/<int:student_id>",views.student_individual_exam_review,name="student_individual_exam_review"),
+    path("delete_submited_exam/<int:student_id>/<int:exam_id>",views.delete_submited_exam,name="delete_submited_exam"),
 ] 

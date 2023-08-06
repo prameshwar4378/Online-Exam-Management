@@ -125,10 +125,10 @@
                                     <td style="text-align:left;">{{ student.name }}</td>
                                     <td>{{ student.division }}</td>
                                     <td>
-                                        {% if student.percentage %}{{ student.percentage|floatformat:2 }}% {% else %}---{% endif %}</td>
+                                        {% if student.attended %}{{ student.percentage|floatformat:2 }}% {% else %}---{% endif %}</td>
                                     <td>
                                         {% if student.attended %}
-                                            <h6 class="btn btn-success">Attended</h6>
+                                            <h6 style="background:green;color:white;">Attended</h6>
                                         {% else %}
                                             <h6>---</h6>
                                         {% endif %}
@@ -136,9 +136,15 @@
                                     <td> 
                                         
                                         {% if student.attended %}
-                                            <a href="{{student.id}}" class="btn btn-primary">View</a>
+                                            <a href="{% url 'student_individual_exam_review' exam.id student.id %}" class="btn btn-primary">View</a>
                                         {% else %}
                                         <button type="button" class="btn btn-secondary" disabled>View</button>
+                                        {% endif %}
+                                        
+                                        {% if student.attended %}
+                                            <a href="{% url 'delete_submited_exam' student.id exam.id %}" class="btn btn-danger">Delete</a>
+                                        {% else %}
+                                        <button type="button" class="btn btn-secondary" disabled>Delete</button>
                                         {% endif %}
                                     </td>
                                 </tr>

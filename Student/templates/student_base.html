@@ -157,7 +157,7 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href=" " class="logo d-flex align-items-center">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
         <center>
           <img src="{% static 'img/logo.jpg' %}" alt="IMS - Logo">
         </center>
@@ -406,7 +406,6 @@
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
 </script>
 
-
 <!-- Chart Js for display Charts-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 
@@ -426,59 +425,47 @@
   }
 </script>
 
+
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-  {
-    %
-    for msg in messages %
-  } {
-    %
-    if msg.tags == 'success' %
-  }
-  swal({
-    title: "Good job!",
-    text: "{{msg}}",
-    icon: "success",
-    button: "OK",
-  });
+    {% for msg in messages %}
+        {% if msg.tags == 'success' %}
+        swal({
+          title: "Good job!",
+          text: "{{msg}}",
+          icon: "success",
+          button: "OK",
+        });
 
-  {
-    % elif msg.tags == 'error' %
-  }
-  swal({
-    title: "Error",
-    text: "{{msg}}",
-    icon: "error",
-    button: "OK",
-  });
-
-  {
-    % elif msg.tags == 'warning' %
-  }
-  swal({
-    title: "Warning",
-    text: "{{msg}}",
-    icon: "warning",
-    button: "OK",
-  });
-
-  {
-    % elif msg.tags == 'info' %
-  }
-  swal({
-    title: "Oops",
-    text: "{{msg}}",
-    icon: "info",
-    button: "OK",
-  });
-
-  {
-    % endif %
-  } {
-    % endfor %
-  }
+        {% elif msg.tags == 'error' %}
+        swal({
+          title: "Error",
+          text: "{{msg}}",
+          icon: "error",
+          button: "OK",
+        });
+         
+        {% elif msg.tags == 'warning' %}
+        swal({
+          title: "Warning",
+          text: "{{msg}}",
+          icon: "warning",
+          button: "OK",
+        });
+         
+        {% elif msg.tags == 'info' %}
+        swal({
+          title: "Oops",
+          text: "{{msg}}",
+          icon: "info",
+          button: "OK",
+        });
+         
+        {% endif %}
+    {% endfor %}
 </script>
-
+ 
 
 
 </html>

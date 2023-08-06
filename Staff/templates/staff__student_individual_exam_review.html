@@ -1,4 +1,4 @@
-{% extends 'student_base.html' %}
+{% extends 'staff_base.html' %}
 {% block content %}
  
 <main id="main" class="main">
@@ -8,7 +8,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Exam Review </a></li>
+                <li class="breadcrumb-item"><a href="#">Student Exam Review </a></li>
             </ol>
         </nav> 
     <section class="section dashboard">
@@ -17,17 +17,7 @@
             <div class="col-lg-12"> 
                 <center>
                     <b><h1>{{exam_details.name}}</h1></b> <br>
-                </center>
-                {% if rank %}
-                    {% if exam_details.is_result_declared %}
-                    {% if rank >= 3 %}
-                    <p href="" class="alert alert-secondary">Opps You are not Elligible for Certificate... </p>
-                    {% else %}
-                    <p href="" class="alert alert-primary">Congratulations you are eligible for download certificate... <a href="{% url 'ranked_in_exam_certificate' exam_details.id %}" class="btn btn-primary">Download</a> </p>
-                    {% endif %}
-                    {% endif %}
-                {% endif %}
-                    <hr>
+                </center> 
                 <div class="row g-6 mb-6">
                     <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card shadow border-0">
@@ -71,13 +61,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Rank</span>
-                                        <span class="h3 font-bold mb-0">
-                                            {% if exam_details.is_result_declared %}
-                                            {{rank}}
-                                            {% else %}
-                                                -----
-                                            {% endif %}
-                                        </span>
+                                        <span class="h3 font-bold mb-0">{{rank}}</span>
                                     </div>
                                 </div> 
                             </div>
@@ -202,6 +186,26 @@
                                         </div>
                                         <div
                                             style="height:200px; width:400px; background-color:#C5358C; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12">
+                            <div class="card" style="overflow:hidden;">
+                                <div class="card-content" style="overflow:hidden;">
+                                    <div class="card-body">
+                                        <div class="media d-flex">
+                                            <div class="align-self-center">
+                                                <i class="icon-pencil primary font-large-2 float-left"></i>
+                                            </div>
+                                            <div class="media-body text-right">
+                                                <h3><b> {{ grade }}</b></h3>
+                                                <span>Grade/Result:</span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            style="height:200px; width:400px; background-color:orange; position:absolute; top:-30px;  left:250px;  transform: rotate(35deg); border-radius:10px;">
                                         </div>
                                     </div>
                                 </div>

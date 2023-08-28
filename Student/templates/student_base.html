@@ -154,12 +154,13 @@
     <div class="loader"></div>
 </div>
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" >
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="{% url 'index' %}" class="logo d-flex align-items-center">
+      <a href="{% url 'index' %}" class="logo d-flex align-items-center" style="text-decoration:none;">
         <center>
-          <img src="{% static 'img/logo.jpg' %}" alt="IMS - Logo">
+          {% comment %} <img src="{% static 'img/logo.jpg' %}" alt="IMS - Logo"> {% endcomment %}
+          <h3 style=" color:#0883AE;"><b>ExamTrax</b></h3>
         </center>
         <!-- <span class="d-none d-lg-block">IMS</span> -->
       </a>

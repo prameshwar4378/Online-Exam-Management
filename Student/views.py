@@ -365,5 +365,59 @@ def default_exam_certificate(request):
         grade= "C+"
     elif 30 <= percentage < 40:
         grade= "D" 
+    return render(request,"certificate/student__default_certificate.html",{'exam_data':exam_data,'current_date':current_date,'percentage':percentage,'grade':grade})
 
+
+
+@check_exam_started
+@student_required
+def download_exam_certificate(request,exam_id):
+    user = request.user  # Assuming the user is authenticated
+    exam = get_object_or_404(Exam, id=exam_id)
+    exam_reviews = UserAnswer.objects.filter(student=user, exam=exam)
+
+    score = 0
+    attempted_questions = 0
+    correct_answers = 0
+    incorrect_answers = 0
+    total_questions = exam_reviews.count()
+
+    for exam_review in exam_reviews:
+        attempted_questions += 1
+        if exam_review.selected_option.is_correct:
+            score += 1
+            correct_answers += 1
+        else:
+            incorrect_answers += 1
+
+    percentage = round((score / total_questions) * 100, 2)
+
+    exam_data=Exam.objects.get(id=exam_id) 
+    current_date = datetime.datetime.now().date()
+
+    print("###################")
+    print("###################")
+    print("###################")
+    print(percentage)
+    print(percentage)
+    print(percentage)
+    print("###################")
+    print("###################")
+    print("###################")
+    if percentage >= 90:
+        grade= "A++"
+    elif 80 <= percentage < 90:
+        grade= "A+"
+    elif 70 <= percentage < 80:
+        grade= "B++"
+    elif 60 <= percentage < 70:
+        grade= "B+"
+    elif 50 <= percentage < 60:
+        grade= "C++"
+    elif 40 <= percentage < 50:
+        grade= "C+"
+    elif 30 <= percentage < 40:
+        grade= "D" 
+    else:
+        grade= "E"
     return render(request,"certificate/student__default_certificate.html",{'exam_data':exam_data,'current_date':current_date,'percentage':percentage,'grade':grade})

@@ -21,22 +21,23 @@
                             <thead>
                                 <tr style="background:#02B4C3;">
                                     <th scope="col" class="text-center text-white" style="">Sr.No</th>
+                                    <th scope="col" class="text-center text-white" style="">Action</th>
                                     <th scope="col" class="text-center text-white" style="">Exam Title</th>
                                     <th scope="col" class="text-center text-white" style="">Subject</th>
-                                    <th scope="col" class="text-center text-white" style="">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for r in available_exams %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ r.name }}</td>
-                                    <td>{{ r.subject }}</td>
                                     <td>
                                         <center>
-                                            <a href="{% url 'exam_review_using_exam_id' r.id %}" class="btn btn-primary px-3">Exam Review</a>
+                                            <a href="{% url 'exam_review_using_exam_id' r.id %}" class="btn btn-warning px-3"> Review</a>
+                                            <a href="{% url 'download_exam_certificate' r.id %}" class="btn btn-primary px-3"> Certificate</a>
                                         </center>
                                     </td>
+                                    <td>{{ r.name }}</td>
+                                    <td>{{ r.subject }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

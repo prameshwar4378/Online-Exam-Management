@@ -73,7 +73,7 @@
                     <hr style="width:50%; margin-top:-8px;">
                     <div style="width:65%">
                         <p style="text-align:justify;color:gray;" class="certificate_content">
-                            They successfully completed the exam named <strong>{{exam_data.name}}</strong> and achieved the grade {{grade}}.
+                              class <b>{{request.user.class_name}}</b> division <b>{{request.user.division}}</b> has successfully completed the class test of subject <b>{{exam_data.subject}}</b> of <b>{{exam_data.name}}</b> and got  grade <b>{{grade}}</b>.
                         </p>
                     </div>
                     <br><br>
@@ -84,12 +84,14 @@
                  <p style="margin-left:100px;">
                     Date :- {{current_date}}
                     <span style="margin-left:470px;">
-                        Principle Signature
+
+                        <img src="{% static 'img/principle_sign.jpg' %}" style="height:70px; width:80px; position: absolute; margin-top:-70px; margin-left:30px;" alt="">
+                        Principal Signature
                     </span>
                  </p>
             </div>
         </div>
-    </div>
+    </div>  
     <script>
         // Function to convert the page to an image
         function convertPageToImage() {

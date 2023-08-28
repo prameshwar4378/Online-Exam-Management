@@ -48,6 +48,7 @@ def index(request):
 
 from datetime import date, timedelta
 # Create your views here.
+
 @institute_required
 def institute_dashboard(request): 
     total_exams = Exam.objects.count()
@@ -208,14 +209,12 @@ def student_bulk_registration(request):
                 messages.success(request, 'Data Imported and Updated Successfully')
             except Exception as e:
                 messages.error(request, f'Error occurred during import: {str(e)}')
-
         else:
             messages.error(request, 'No file selected.')
         
         return redirect('/Institute/student_bulk_registration')
 
     return render(request, 'institute__student_bulk_registration.html')
- 
 
 from django.template.loader import get_template
 from django.http import HttpResponse

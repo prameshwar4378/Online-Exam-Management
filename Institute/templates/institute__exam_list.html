@@ -1,0 +1,136 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Exam List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Exam List </a></li>
+            </ol>
+        </nav>
+        <section class="section dashboard">
+            <div class="row">
+                <!-- Left side columns -->
+                <div class="col-lg-12">
+                      
+                    <div class="row">
+                        <div class="container" style=" overflow:scroll;">
+                            <table id="example" class="table table-striped "
+                                style="overflow:scroll; width:100%;min-width: max-content;">
+                                <thead>
+                                    <tr style="background:#02B4C3;">
+                                        <th scope="col" class="text-center text-white" style="">Sr.No</th>
+                                        <th scope="col" class="text-center text-white" style="">Teacher Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Exam Link</th>
+                                        <th scope="col" class="text-center text-white" style="">Exam Title</th>
+                                        <th scope="col" class="text-center text-white" style="">Class Name</th>
+                                        <th scope="col" class="text-center text-white" style="">Division</th>
+                                        <th scope="col" class="text-center text-white" style="">Subject</th>
+                                        <th scope="col" class="text-center text-white" style="">Exam Date</th>
+                                        <th scope="col" class="text-center text-white" style="">is Published</th>
+                                        <th scope="col" class="text-center text-white" style="">Result Declared</th>
+                                        <th scope="col" class="text-center text-white" style="">Action</th>
+                                    </tr>
+                                </thead>    
+                                <tbody>
+                                    {% if exam_data %}
+                                    {% for r in exam_data %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>
+                                            {{r.staff_id}}
+                                        </td>
+                                        <td>
+                                            <input type="hidden" id="examLink_{{forloop.counter}}" class="form-control" value="{{exam_url}}{{r.id}}" readonly>
+                                            <button class="btn btn-primary" onclick="copyToClipboard('examLink_{{forloop.counter}}')">Copy Link</button>
+                                        </td>
+                                        <td>{{r.name}}</td>
+                                        <td>{{r.class_name}}</td>
+                                        <td>{{r.division}}</td>
+                                        <td>{{r.subject}}</td>
+                                        <td>{{r.exam_date}}</td>
+                                        <td style="text-align:center">
+                                            {% if r.is_publish %}
+                                            <span class="btn btn-success">Published</span>
+                                            {% else %}
+                                            <span class="btn btn-secondary">not published</span>
+                                            {% endif %}
+                                        </td>
+                                        <td style="text-align:center">
+                                            {% if r.is_result_declared %}
+                                            <span class="btn btn-success">Declared</span>
+                                            {% else %}
+                                            <span class="btn btn-secondary">Not Declared</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <center> 
+                                                <a href="{% url 'delete_exam' r.id %}" 
+                                                    class="btn btn-danger px-3">Delete</a>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End Left side columns -->
+        </section>
+
+</main><!-- End #main -->
+
+<script>
+    function copyToClipboard(elementId) {
+        var inputElement = document.getElementById(elementId);
+
+        // Create a new textarea element to hold the text
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = inputElement.value;
+
+        // Append the textarea element to the document
+        document.body.appendChild(tempTextArea);
+
+        // Select the text inside the textarea
+        tempTextArea.select();
+
+        try {
+            // Execute the copy command using the Clipboard API
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'Link copied success !' : 'Copying failed. Please try again.';
+            alert(msg);
+        } catch (err) {
+            console.error('Failed to copy link:', err);
+        } finally {
+            // Remove the temporary textarea from the document
+            document.body.removeChild(tempTextArea);
+        }
+    }
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "paging": true,
+            "pageLength": 10,
+            "searching": true
+        });
+    });
+</script>
+{% endblock content %}

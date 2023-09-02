@@ -1,0 +1,48 @@
+{% extends 'institute_base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<main id="main" class="main">
+    
+    <div class="pagetitle">
+        <h1>Update Student</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Update Student</a></li>
+    </ol>
+    </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                  <div class="col-sm-1"></div>
+                  <div class="col-sm-10 px-3 py-3 rounded">
+                    <div class="container" style="max-width:100%;">
+                         <form id="my-form" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{form|crispy}}
+                           <center> <input type="submit" value="Submit" class="btn btn-primary text-light px-5 px-3"></center>
+                         </form>
+                    </div>
+                  </div>
+                  <div class="col-sm-1"></div>
+
+                </div>
+            </div>
+        </div><!-- End Left side columns -->
+
+    </section>
+
+
+</main><!-- End #main -->
+
+ 
+{% endblock content %}
+
+
+

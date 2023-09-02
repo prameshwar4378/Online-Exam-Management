@@ -80,6 +80,8 @@
                         {% endif %}
                         {% endfor %}
                     </ol>
+                    <hr>
+                    <a href="{% url 'delete_Question' question.id %}" class="btn btn-danger">Delete Question</a>
                 </div>
                 {% endfor %}
             </div>

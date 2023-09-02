@@ -15,6 +15,7 @@ urlpatterns = [
     path("delete_subject/<int:id>",views.delete_subject,name="delete_subject"),
     path("update_student/<int:id>",views.update_student,name="update_student"),
     path("delete_exam/<int:id>",views.delete_exam,name="delete_exam"),
+    path("delete_Question/<int:id>",views.delete_Question,name="delete_Question"),
     path("exam_dashboard/<int:exam_id>",views.exam_dashboard,name="exam_dashboard"),
     path("staff_exam_list/",views.staff_exam_list,name="staff_exam_list"), 
     path("create_question/",views.create_question,name="create_question"), 

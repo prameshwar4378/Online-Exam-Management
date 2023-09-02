@@ -48,7 +48,7 @@ from django.core.exceptions import ObjectDoesNotExist
 @check_exam_started
 @student_required
 def student_dashboard(request):
-    # UserAnswer.objects.all().delete()
+    # UserAnswer.objects.filter(exam_id="1").count() 
     try:
         subject_list=Subjects.objects.filter(class_name=request.user.class_name)
         

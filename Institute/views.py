@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import Staff_Creation_Form,Staff_Update_Form,login_form
+from Staff.forms import Student_Update_Form
 from django.contrib import messages
 from .models import CustomUser,Exam,Question
 from django.contrib.auth import login as authlogin, authenticate,logout as DeleteSession
@@ -267,3 +268,35 @@ def export_staff(request):
         return response
     return HttpResponse('Error generating PDF file: %s' % pdf.err, status=400)
 
+
+
+
+
+@institute_required
+def student_list(request): 
+    rec=CustomUser.objects.filter(is_student=True).order_by('-id')
+    return render(request,'institute__student_list.html',{'rec':rec})
+
+
+@institute_required
+def institute_update_student(request,id):
+    if request.method=="POST":
+        pi=CustomUser.objects.get(pk=id)
+        fm=Student_Update_Form(request.POST,request.FILES, instance=pi)
+        if fm.is_valid():
+            fm.save()
+            messages.success(request,'Student Updated Successfully')
+            return redirect('/Institute/student_list/')
+    else:
+        pi=CustomUser.objects.get(pk=id)
+        fm=Student_Update_Form(instance=pi)
+    return render(request,'institute__update_student.html',{'form':fm})
+
+
+@institute_required
+def exam_list(request): 
+    record=Exam.objects.all().order_by('-id')
+
+    base_url = request.scheme + "://" + request.get_host()
+    exam_url=f"{base_url}/Student/exam_overview/"
+    return render(request,'institute__exam_list.html',{'exam_data':record,"exam_url":exam_url})

@@ -44,14 +44,14 @@ class Student_Update_Form(UserCreationForm):
         self.fields['password2'].widget = forms.PasswordInput(attrs={'autocomplete': 'new-password', 'placeholder': 'Confirm Password'})
         self.fields['password1'].help_text = None
         self.fields['password2'].help_text = None
-    class_name = forms.ChoiceField(choices=CLASS)   
+    # class_name = forms.ChoiceField(choices=CLASS)   
     class Meta:
         model = CustomUser
         fields = ('student_prn_no','name','gender', 'roll_no','password1','password2')
         widgets={
             'name': forms.TextInput(attrs={'autofocus': True, }),  
         }
-  
+
 class Form_Create_Exam(forms.ModelForm): 
     class Meta:
         model = Exam

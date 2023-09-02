@@ -154,7 +154,7 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
   <div class="d-flex align-items-center justify-content-between">
-      <a href=" " class="logo d-flex align-items-center" data-toggle="modal"  data-target="#logout_model">
+      <a href=" " class="logo d-flex align-items-center" style="text-decoration:none;" data-toggle="modal"  data-target="#logout_model">
           <center>
             {% comment %} <img src="{% static 'img/logo.jpg' %}" alt="IMS - Logo"> {% endcomment %}
             <h3 style=" color:#0883AE;"><b>ExamTrax</b></h3>
@@ -326,7 +326,7 @@
           <select name="exam_id" id="exam_id" class="form-control" required>
             <option value="">---Select---</option>
             {% for i in exam_list_data %}
-            <option value="{{i.id}}">{{i.name}}</option>
+            <option value="{{i.id}}">{{i.class_name}} | {{i.subject}} | {{i.name}}</option>
             {% endfor %}
           </select>
       </div>

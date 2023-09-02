@@ -273,7 +273,9 @@ def create_question(request):
     exam_id = request.session.get('exam_id')
     exam_record = get_object_or_404(Exam, id=exam_id)
     questions_record = Question.objects.filter(exam=exam_record)
-                                                            
+
+    request.session['exam_id_for_delete_question_redirect'] = exam_id  
+
     if request.method == 'POST':
         question_text = request.POST.get('question_text')
         options = request.POST.getlist('option_text')
@@ -326,6 +328,8 @@ def select_exam_for_exam_dashboard(request):
 
 
 
+
+@staff_required
 def exam_dashboard(request, exam_id):
     try:
         exam = Exam.objects.get(pk=exam_id)
@@ -389,6 +393,7 @@ from django.http import HttpResponse
 from io import BytesIO
 from xhtml2pdf import pisa 
 
+@staff_required
 def export_exam_data_to_pdf(request, exam_id):
     template = get_template('staff__export_exam_data.html')
     try:
@@ -442,6 +447,7 @@ def export_exam_data_to_pdf(request, exam_id):
 
 from django.db.models import Count
 
+@staff_required
 def student_individual_exam_review(request, exam_id, student_id):
     student = student_id  # Assuming the user is authenticated
     exam = get_object_or_404(Exam, id=exam_id)
@@ -504,8 +510,16 @@ def student_individual_exam_review(request, exam_id, student_id):
     })
 
 
+@staff_required
 def delete_submited_exam(request, student_id, exam_id):
     UserAnswer.objects.filter(student_id=student_id,exam_id=exam_id).delete()
     student_name=CustomUser.objects.get(id=student_id)
     messages.success(request,f"Now {student_name.name} Apear for retake exam")
     return redirect(f"/Staff/exam_dashboard/{exam_id}")
+
+@staff_required
+def delete_Question(request,id):
+    Question.objects.filter(id=id).delete() 
+    exam_id=request.session.get('exam_id_for_delete_question_redirect')
+    messages.success(request,"Question Successfuly deleted")
+    return redirect("/Staff/create_question/")
